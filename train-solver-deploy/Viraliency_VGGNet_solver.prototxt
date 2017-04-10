@@ -1,0 +1,17 @@
+net: "$LENA_POOLING_ROOT/train-solver-deploy/Viraliency_VGGNet_train.prototxt"         # Change this to the absolute path to your model file
+#test_initialization: false
+test_iter: 20
+test_interval: 500
+base_lr: 0.0001
+#lr_policy: "fixed"
+lr_policy: "step"
+gamma: 0.1
+stepsize: 5000
+display: 20
+momentum: 0.9
+max_iter: 10000
+weight_decay: 0.05
+snapshot: 10000
+snapshot_prefix: "$LENA_POOLING_ROOT/output/Viraliency_VGGNet"      # Change this to the absolute path to where you wish to output solver snapshots
+solver_mode: GPU
+
