@@ -308,7 +308,7 @@ message ParamSpec {
 // NOTE
 // Update the next available ID when you add a new LayerParameter field.
 //
-// LayerParameter next available layer-specific ID: 147 (last added: recurrent_param)
+// LayerParameter next available layer-specific ID: 148 (last added: lena_pooling_param)
 message LayerParameter {
   optional string name = 1; // the layer name
   optional string type = 2; // the layer type
@@ -405,6 +405,7 @@ message LayerParameter {
   optional ThresholdParameter threshold_param = 128;
   optional TileParameter tile_param = 138;
   optional WindowDataParameter window_data_param = 129;
+  optional LenaPoolingParameter lena_pooling_param = 148;
 }
 
 // Message that stores parameters used to apply transformation
@@ -927,6 +928,30 @@ message PowerParameter {
   optional float power = 1 [default = 1.0];
   optional float scale = 2 [default = 1.0];
   optional float shift = 3 [default = 0.0];
+}
+
+message LenaPoolingParameter {
+  // Pad, kernel size, and stride are all given as a single value for equal
+  // dimensions in height and width or as Y, X pairs.
+  optional uint32 pad = 3 [default = 0]; // The padding size (equal in Y, X)
+  optional uint32 pad_h = 8 [default = 0]; // The padding height
+  optional uint32 pad_w = 9 [default = 0]; // The padding width
+  optional uint32 kernel_size = 1; // The kernel size (square)
+  optional uint32 kernel_h = 4; // The kernel height
+  optional uint32 kernel_w = 5; // The kernel width
+  optional uint32 stride = 2 [default = 1]; // The stride (equal in Y, X)
+  optional uint32 stride_h = 6; // The stride height
+  optional uint32 stride_w = 7; // The stride width
+  enum Engine {
+    DEFAULT = 0;
+    CAFFE = 1;
+    CUDNN = 2;
+  }
+  optional Engine engine = 10 [default = DEFAULT];
+  // If global_pooling then it will pool over the size of the bottom by doing
+  // kernel_h = bottom->height and kernel_w = bottom->width
+  optional bool global_pooling = 11 [default = false];
+  optional FillerParameter mu_filler = 12;
 }
 
 message PythonParameter {
