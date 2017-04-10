@@ -17,7 +17,7 @@ template <typename Dtype>
 void LenaPoolingLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
       const vector<Blob<Dtype>*>& top) {
   //std::cerr << "This is the new LenaPolling.cpp" << std::endl;
-  LenaPoolingParameter pool_param = this->layer_param_.lamp_pooling_param();
+  LenaPoolingParameter pool_param = this->layer_param_.lena_pooling_param();
   if (pool_param.global_pooling()) {
     CHECK(!(pool_param.has_kernel_size() ||
       pool_param.has_kernel_h() || pool_param.has_kernel_w()))
@@ -79,7 +79,7 @@ void LenaPoolingLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
   this->blobs_[0]->Reshape(weight_shape);
   // Fill the weights
   shared_ptr<Filler<Dtype> > mu_filler(GetFiller<Dtype>(
-      this->layer_param_.lamp_pooling_param().mu_filler()));
+      this->layer_param_.lena_pooling_param().mu_filler()));
   mu_filler->Fill(this->blobs_[0].get());
   // Make them learnable
   this->param_propagate_down_.resize(this->blobs_.size(), true);
